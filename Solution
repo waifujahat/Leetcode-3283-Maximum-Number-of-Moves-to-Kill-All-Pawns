@@ -1,0 +1,97 @@
+public class Solution {
+    public int MaxMoves(int kx, int ky, int[][] positions) {
+        
+        int n = positions.Length;
+        var posList = new List<(int, int)> { (kx, ky) };
+        foreach (var pos in positions) posList.Add((pos[0], pos[1]));
+
+        var distances = new int[n + 1, n + 1];
+        for (int i = 0; i <= n; i++)
+        {
+            for (int j = 0; j <= n; j++)
+            {
+                distances[i, j] = (i == j) ? 0 : ComputeMinMoves(posList[i].Item1, posList[i].Item2, posList[j].Item1, posList[j].Item2);
+            }
+        }
+
+        var memo = new int[1 << n, n + 1];
+        for (int i = 0; i < memo.GetLength(0); i++)
+        {
+            for (int j = 0; j < memo.GetLength(1); j++)
+            {
+                memo[i, j] = -1;
+            }
+        }
+
+        int Dfs(int mask, int currentPos)
+        {
+            if (mask == (1 << n) - 1) 
+            return 0;
+
+            if (memo[mask, currentPos] != -1) 
+            return memo[mask, currentPos];
+
+            bool isAlice = (System.Numerics.BitOperations.PopCount((uint)mask) % 2 == 0);
+            int bestScore = isAlice ? 0 : int.MaxValue;
+
+            for (int i = 0; i < n; i++)
+            {
+                if ((mask & (1 << i)) == 0)
+                {
+                    int nextPos = i + 1;
+                    int moveCount = distances[currentPos, nextPos];
+
+                    if (moveCount == int.MaxValue) 
+                    continue;
+
+                    int score = moveCount + Dfs(mask | (1 << i), nextPos);
+                    bestScore = isAlice ? Math.Max(bestScore, score) : Math.Min(bestScore, score);
+                }
+            }
+            return memo[mask, currentPos] = bestScore;
+        }
+        return Dfs(0, 0);
+    }
+
+    private static (int, int)[] KnightMoves = new (int, int)[]
+    {
+        (2, 1), (1, 2), (-1, 2), (-2, 1),
+        (-2, -1), (-1, -2), (1, -2), (2, -1)
+    };
+
+    private int ComputeMinMoves(int sx, int sy, int tx, int ty)
+    {
+        if (sx == tx && sy == ty) 
+        return 0;
+
+        var visited = new bool[50, 50];
+        var queue = new Queue<(int, int)>();
+        queue.Enqueue((sx, sy));
+        visited[sx, sy] = true;
+        int moves = 0;
+
+        while (queue.Count > 0)
+        {
+            int size = queue.Count;
+            moves++;
+            for (int i = 0; i < size; i++)
+            {
+                var (x, y) = queue.Dequeue();
+                foreach (var (dx, dy) in KnightMoves)
+                {
+                    int nx = x + dx, ny = y + dy;
+
+                    if (nx == tx && ny == ty) 
+                    return moves;
+
+                    if (nx >= 0 && nx < 50 && ny >= 0 && ny < 50 && !visited[nx, ny])
+                    {
+                        visited[nx, ny] = true;
+                        queue.Enqueue((nx, ny));
+                    }
+                }
+            }
+        }
+        return int.MaxValue;
+    }
+}
