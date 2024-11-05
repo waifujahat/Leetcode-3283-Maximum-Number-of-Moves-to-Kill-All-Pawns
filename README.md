@@ -1,4 +1,4 @@
-# Leetcode-3283.-Maximum-Number-of-Moves-to-Kill-All-Pawns
+# Leetcode-3283.-Maximum-Number-of-Moves-to-Kill-All-Pawns in C#
 Solution for waifujahat | C# | DP | 100% with explanation step by step
 
 # Intuition
