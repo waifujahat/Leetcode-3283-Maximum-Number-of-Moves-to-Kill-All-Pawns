@@ -1,5 +1,5 @@
 # Leetcode-3283-Maximum-Number-of-Moves-to-Kill-All-Pawns in C#
-Solution for waifujahat | C# | DP | 100% with explanation step by step
+Solution for waifujahat | C# | DP | 100% using DFS
 
 ![Screenshot 2024-11-05 161721.png](https://assets.leetcode.com/users/images/c9371f4f-7c54-46d3-a578-cff889964225_1730798755.64481.png)
 
