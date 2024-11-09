@@ -20,17 +20,6 @@ Capturing all pawns positioned on chessboard using a knights moves, with two pla
 
 ---
 
-# Complexity
-- Time complexity
-
-Every BFS call requires 𝑂(𝑚2) O(m~2), where m is the grids side length (in this case, 50), resulting in 𝑂(𝑛⋅𝑚2) O(n⋅m^2) overall and DFS yields O(n⋅2 n) since there are 2 𝑛 2 n possible subsets of pawns to visit and 𝑛 n possible beginning positions, so in general, the complexity is roughly O(n⋅(m 2 +2 n )) (𝑂(𝑛⋅(𝑚 2 + 2 𝑛))
-
-- Space complexity
-
-For every pawn, the memorization table for 2 n states is 𝑂( 𝑛⋅ 2 n) O(n⋅2 n) so the space complexity is 𝑂 (𝑛⋅ (𝑛 + 2 𝑛))
-
----
-
 # Code Explanation 
 
 1. It starts by storing the knight's initial position and the positions of the pawns
